@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sports Academy Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='admin.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <!-- =====================================================
+         LOGIN PAGE
+    ====================================================== -->
+
+    {% if not logged_in %}
+
+    <div class="admin-login-wrapper">
+
+        <div class="admin-login-card">
+
+            <div class="admin-logo">
+                🏆
+            </div>
+
+            <h1>Sports Academy</h1>
+
+            <h2>Admin Login</h2>
+
+            <p class="admin-login-subtitle">
+                Authorized administrators only
+            </p>
+
+            {% if error %}
+
+            <div class="admin-error">
+                {{ error }}
+            </div>
+
+            {% endif %}
+
+            <form
+                method="POST"
+                action="{{ url_for('admin_login') }}"
+            >
+
+                <div class="input-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter admin username"
+                        required
+                        autocomplete="username"
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter admin password"
+                        required
+                        autocomplete="current-password"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="admin-login-button"
+                >
+                    🔐 Login
+                </button>
+
+            </form>
+
+            <a
+                href="{{ url_for('home') }}"
+                class="back-home"
+            >
+                ← Back to Sports Academy
+            </a>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+
+    <!-- =====================================================
+         ADMIN DASHBOARD
+    ====================================================== -->
+
+    <div class="admin-dashboard">
+
+        <!-- SIDEBAR -->
+
+        <aside class="admin-sidebar">
+
+            <div class="sidebar-logo">
+
+                <div class="sidebar-trophy">
+                    🏆
+                </div>
+
+                <div>
+                    <h2>Sports Academy</h2>
+                    <span>ADMIN PANEL</span>
+                </div>
+
+            </div>
+
+
+            <nav class="admin-nav">
+
+                <button
+                    class="nav-item active"
+                    onclick="showAdminSection('dashboardSection', this)"
+                >
+                    📊 Dashboard
+                </button>
+
+                <button
+                    class="nav-item"
+                    onclick="showAdminSection('registrationsSection', this)"
+                >
+                    📝 Registrations
+                </button>
+
+                <button
+                    class="nav-item"
+                    onclick="showAdminSection('bookingsSection', this)"
+                >
+                    🏟️ Slot Bookings
+                </button>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a
+                    href="{{ url_for('home') }}"
+                    class="sidebar-link"
+                >
+                    🌐 View Website
+                </a>
+
+                <a
+                    href="{{ url_for('admin_logout') }}"
+                    class="sidebar-link logout-link"
+                >
+                    🚪 Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="admin-main">
+
+            <!-- TOP BAR -->
+
+            <header class="admin-topbar">
+
+                <div>
+
+                    <h1>
+                        Admin Dashboard
+                    </h1>
+
+                    <p>
+                        Sports Academy Management System
+                    </p>
+
+                </div>
+
+                <div class="admin-user">
+
+                    👤
+
+                    <span>
+                        {{ session.get('admin_username', 'Admin') }}
+                    </span>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 DASHBOARD SECTION
+            ================================================== -->
+
+            <section
+                id="dashboardSection"
+                class="admin-section active-section"
+            >
+
+                <div class="section-title">
+
+                    <h2>
+                        Dashboard Overview
+                    </h2>
+
+                    <p>
+                        Welcome to Sports Academy Admin Panel
+                    </p>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            📝
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Total Registrations
+                            </span>
+
+                            <strong>
+                                {{ registrations|length }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            🏟️
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Total Slot Bookings
+                            </span>
+
+                            <strong>
+                                {{ bookings|length }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            🏅
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Registered Sports
+                            </span>
+
+                            <strong>
+                                {{ sports_count }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            📅
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Today's Bookings
+                            </span>
+
+                            <strong>
+                                {{ today_bookings }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-info">
+
+                    <div class="info-card">
+
+                        <h3>
+                            👋 Admin Information
+                        </h3>
+
+                        <p>
+                            You are logged in as
+                            <strong>
+                                {{ session.get('admin_username', 'Admin') }}
+                            </strong>.
+                        </p>
+
+                        <p>
+                            From this dashboard you can view
+                            Sports Academy registrations and
+                            slot booking details.
+                        </p>
+
+                    </div>
+
+                    <div class="info-card">
+
+                        <h3>
+                            🔐 Security
+                        </h3>
+
+                        <p>
+                            This dashboard is protected by
+                            admin authentication.
+                        </p>
+
+                        <p>
+                            Normal website visitors cannot
+                            access this dashboard without
+                            logging in.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 REGISTRATIONS SECTION
+            ================================================== -->
+
+            <section
+                id="registrationsSection"
+                class="admin-section"
+            >
+
+                <div class="section-title">
+
+                    <h2>
+                        📝 Registration Details
+                    </h2>
+
+                    <p>
+                        All Sports Academy registrations
+                    </p>
+
+                </div>
+
+
+                <div class="table-tools">
+
+                    <input
+                        type="text"
+                        id="registrationSearch"
+                        placeholder="🔍 Search registration..."
+                        onkeyup="searchTable(
+                            'registrationSearch',
+                            'registrationTable'
+                        )"
+                    >
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table id="registrationTable">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Sport</th>
+                                <th>Plan</th>
+                                <th>Amount</th>
+                                <th>Location</th>
+                                <th>Experience</th>
+                                <th>Created</th>
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for row in registrations %}
+
+                            <tr>
+
+                                <td>
+                                    {{ row.id }}
+                                </td>
+
+                                <td>
+                                    {{ row.first_name }}
+                                    {{ row.last_name }}
+                                </td>
+
+                                <td>
+                                    {{ row.phone }}
+                                </td>
+
+                                <td>
+                                    {{ row.email }}
+                                </td>
+
+                                <td>
+                                    {{ row.age }}
+                                </td>
+
+                                <td>
+                                    {{ row.gender }}
+                                </td>
+
+                                <td>
+                                    {{ row.sport }}
+                                </td>
+
+                                <td>
+                                    {{ row.plan or '-' }}
+                                </td>
+
+                                <td>
+                                    ₹{{ row.amount }}
+                                </td>
+
+                                <td>
+                                    {{ row.location }}
+                                </td>
+
+                                <td>
+                                    {{ row.experience or '-' }}
+                                </td>
+
+                                <td>
+                                    {{ row.created_at }}
+                                </td>
+
+                                <td>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'delete_registration',
+                                            registration_id=row.id
+                                        ) }}"
+                                        onsubmit="
+                                            return confirm(
+                                                'Delete this registration?'
+                                            );
+                                        "
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="delete-button"
+                                        >
+                                            🗑️ Delete
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+
+                                <td
+                                    colspan="13"
+                                    class="empty-row"
+                                >
+                                    No registrations found.
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 SLOT BOOKINGS SECTION
+            ================================================== -->
+
+            <section
+                id="bookingsSection"
+                class="admin-section"
+            >
+
+                <div class="section-title">
+
+                    <h2>
+                        🏟️ Slot Booking Details
+                    </h2>
+
+                    <p>
+                        All Sports Academy slot bookings
+                    </p>
+
+                </div>
+
+
+                <div class="table-tools">
+
+                    <input
+                        type="text"
+                        id="bookingSearch"
+                        placeholder="🔍 Search booking..."
+                        onkeyup="searchTable(
+                            'bookingSearch',
+                            'bookingTable'
+                        )"
+                    >
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table id="bookingTable">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>Sport</th>
+                                <th>Plan</th>
+                                <th>Amount</th>
+                                <th>Venue</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for row in bookings %}
+
+                            <tr>
+
+                                <td>
+                                    {{ row.id }}
+                                </td>
+
+                                <td>
+                                    {{ row.name }}
+                                </td>
+
+                                <td>
+                                    {{ row.gender }}
+                                </td>
+
+                                <td>
+                                    {{ row.sport }}
+                                </td>
+
+                                <td>
+                                    {{ row.plan or '-' }}
+                                </td>
+
+                                <td>
+                                    ₹{{ row.amount }}
+                                </td>
+
+                                <td>
+                                    {{ row.venue }}
+                                </td>
+
+                                <td>
+                                    {{ row.booking_data }}
+                                </td>
+
+                                <td>
+                                    {{ row.booking_time }}
+                                </td>
+
+                                <td>
+                                    {{ row.month_name }}
+                                </td>
+
+                                <td>
+                                    {{ row.booking_year }}
+                                </td>
+
+                                <td>
+                                    {{ row.phone }}
+                                </td>
+
+                                <td>
+                                    {{ row.email }}
+                                </td>
+
+                                <td>
+                                    {{ row.address }}
+                                </td>
+
+                                <td>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'delete_booking',
+                                            booking_id=row.id
+                                        ) }}"
+                                        onsubmit="
+                                            return confirm(
+                                                'Delete this booking?'
+                                            );
+                                        "
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="delete-button"
+                                        >
+                                            🗑️ Delete
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+
+                                <td
+                                    colspan="15"
+                                    class="empty-row"
+                                >
+                                    No slot bookings found.
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        function showAdminSection(sectionId, button) {
+
+            const sections =
+                document.querySelectorAll(".admin-section");
+
+            sections.forEach(function(section) {
+
+                section.classList.remove(
+                    "active-section"
+                );
+
+            });
+
+
+            const selectedSection =
+                document.getElementById(sectionId);
+
+            if (selectedSection) {
+
+                selectedSection.classList.add(
+                    "active-section"
+                );
+
+            }
+
+
+            const navButtons =
+                document.querySelectorAll(".nav-item");
+
+            navButtons.forEach(function(item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            if (button) {
+
+                button.classList.add("active");
+
+            }
+
+        }
+
+
+        function searchTable(inputId, tableId) {
+
+            const input =
+                document.getElementById(inputId);
+
+            const table =
+                document.getElementById(tableId);
+
+            if (!input || !table) {
+                return;
+            }
+
+
+            const filter =
+                input.value.toLowerCase();
+
+            const rows =
+                table
+                    .getElementsByTagName("tbody")[0]
+                    .getElementsByTagName("tr");
+
+
+            for (let i = 0; i < rows.length; i++) {
+
+                const rowText =
+                    rows[i].innerText.toLowerCase();
+
+                if (rowText.includes(filter)) {
+
+                    rows[i].style.display = "";
+
+                } else {
+
+                    rows[i].style.display = "none";
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

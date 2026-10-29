@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Academy | Login</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='login.css') }}">
+</head>
+
+<body>
+    <main class="login-page">
+        <section class="login-card">
+
+            <!-- LEFT SIDE: SPORTS IMAGE -->
+            <div class="sports-panel">
+                <div class="image-overlay"></div>
+
+                <div class="sports-content">
+                    <div class="brand">
+                        <span class="brand-icon">🏆</span>
+                        <span>SPORTS ACADEMY</span>
+                    </div>
+
+                    <div class="sports-message">
+                        <p class="eyebrow">YOUR JOURNEY STARTS HERE</p>
+
+                        <h1>Unleash the<br>Champion in You.</h1>
+
+                        <p class="sports-description">
+                            Train harder. Play smarter. Achieve greatness.
+                            Join Sports Academy and take your game to the
+                            next level.
+                        </p>
+
+                        <div class="sports-tags">
+                            <span>⚽ Football</span>
+                            <span>🏀 Basketball</span>
+                            <span>🏏 Cricket</span>
+                        </div>
+                    </div>
+
+                    <p class="panel-footer">
+                        YOUR PASSION. YOUR GAME. YOUR FUTURE.
+                    </p>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE: LOGIN FORM -->
+            <div class="form-panel">
+
+                <div class="mobile-brand">
+                    <span>🏆</span> SPORTS ACADEMY
+                </div>
+
+                <div class="form-heading">
+                    <p class="welcome-text">WELCOME BACK!</p>
+                    <h2>Login to your account</h2>
+                    <p class="subtitle">
+                        Enter your details to continue your sports journey.
+                    </p>
+                </div>
+
+                <!-- Error message -->
+                {% if error %}
+                    <div class="error-message" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                <!-- Login form -->
+                <form id="loginForm"
+                      method="POST"
+                      action="{{ url_for('login') }}">
+
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email address"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <div class="password-label">
+                            <label for="password">Password</label>
+                        </div>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                id="togglePassword"
+                                class="toggle-password"
+                                aria-label="Show password">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                            id="loginButton"
+                            class="login-button">
+                        <span id="buttonText">Login</span>
+                        <span class="button-arrow">→</span>
+                    </button>
+
+                    <p class="signup-text">
+                        Don't have an account?
+                        <a href="{{ url_for('signup') }}">Create Account</a>
+                    </p>
+                </form>
+
+                <div class="form-bottom">
+                    <span>🔒</span>
+                    Your account information is protected.
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Show loading screen only after successful login -->
+    {% if loading %}
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">🏆</div>
+            <h2>Welcome to Sports Academy!</h2>
+            <p>Preparing your champion experience...</p>
+
+            <div class="loading-track">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Redirect only when Flask confirms successful login.
+        window.addEventListener("DOMContentLoaded", function () {
+            window.setTimeout(function () {
+                window.location.replace("{{ url_for('home') }}");
+            }, 1500);
+        });
+    </script>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+</body>
+</html>

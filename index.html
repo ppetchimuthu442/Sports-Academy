@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sports Academy</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+<div class="logo" onclick="showPage('home')">
+<h2>Sports<span> Academy</span></h2>
+</div>
+<button class="mobile-menu-btn" onclick="toggleMobileNav()" aria-label="Toggle Navigation">
+<i class="fa-solid fa-bars"></i>
+</button>
+<nav>
+<ul id="navList">
+<li><a onclick="showPage('home')">Home</a></li>
+<li class="dropdown">
+<a href="javascript:void(0)" onclick="toggleDropdown(event)">
+Sports <i id="chevron" class="fa-solid fa-chevron-down chevron-icon"></i>
+</a>
+<ul class="dropdown-menu" id="dropdownMenu">
+<li><a onclick="openSportDetail('football')">Football</a></li>
+<li><a onclick="openSportDetail('basketball')">Basketball</a></li>
+<li><a onclick="openSportDetail('cricket')">Cricket</a></li>
+<li><a onclick="openSportDetail('volleyball')">Volleyball</a></li>
+<li><a onclick="openSportDetail('swimming')">Swimming</a></li>
+<li><a onclick="openSportDetail('skating')">Skating</a></li>
+<li><a onclick="openSportDetail('chess')">Chess</a></li>
+</ul>
+</li>
+<li><a onclick="showPage('slots')">Slots</a></li>
+<li><a onclick="showPage('features')">Features</a></li>
+<li><a href="{{ url_for('my_progress') }}">My Progress</a></li>
+<li><a onclick="showPage('register')" class="nav-btn">Register Now</a></li>
+</ul>
+</nav>
+</header>
+
+<div id="main-page">
+<section id="home" class="hero-section">
+<div class="hero-content">
+<h1>SPORTS ACADEMY</h1>
+<p>Unleash the Champion in You. Join Us Today!</p>
+<div class="hero-buttons">
+<button onclick="showPage('register')" class="btn-primary">Register Now</button>
+<button onclick="showPage('slots')" class="btn-secondary">Book a Slot</button>
+</div>
+</div>
+</section>
+
+<section id="sports" class="section-padding">
+<h2 class="section-title">Sports Programs</h2>
+<div class="slider-wrapper">
+<button type="button" class="arrow-btn arrow-left" onclick="slideCards('left')" aria-label="Previous Sport">
+<i class="fa-solid fa-chevron-left"></i>
+</button>
+
+<div class="slider-container">
+<div class="sports-track" id="sportsTrack">
+
+<div class="sport-card" onclick="openSportDetail('football')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8YD13nCfjlOYZGR9V2AicIfyeZro9Sz9DCOa4cdTHRA&s=10=" alt="Football" class="sport-img">
+<div class="sport-info">
+<h3>Football</h3>
+<p>FIFA-standard artificial turf and dynamic passing arena drills.</p>
+<span class="sport-card-btn">View Program &rarr;</span>
+</div>
+</div>
+
+<div class="sport-card" onclick="openSportDetail('basketball')">
+<img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=600" alt="Basketball" class="sport-img">
+<div class="sport-info">
+<h3>Basketball</h3>
+<p>Indoor maple-wood courts with pro glass backboards and rims.</p>
+<span class="sport-card-btn">View Program &rarr;</span>
+</div>
+</div>
+
+<div class="sport-card" onclick="openSportDetail('cricket')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlTKL3AHLFa1rh2UdQMvSlZMZhDvaz99MNqvZ1KuxVnw&s=10" alt="Cricket" class="sport-img">
+<div class="sport-info">
+<h3>Cricket</h3>
+<p>Professional practice nets with speed bowling machines.</p>
+<span class="sport-card-btn">View Program &rarr;</span>
+</div>
+</div>
+
+<div class="sport-card" onclick="openSportDetail('volleyball')">
+<img src="https://t4.ftcdn.net/jpg/13/07/35/63/360_F_1307356346_YACAeReHvtctvUEHdAoPbBq0843C0i5s.jpg" alt="Volleyball" class="sport-img">
+<div class="sport-info">
+<h3>Volleyball</h3>
+<p>Indoor shock-absorbent courts & beach sand practice courts.</p>
+<span class="sport-card-btn">View Program &rarr;</span>
+</div>
+</div>
+
+<div class="sport-card" onclick="openSportDetail('swimming')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS53uxWJWlPfGExg59ALkbz6jVcgASSPA22E3WvskNOyQ&s=10" alt="Swimming" class="sport-img">
+<div class="sport-info">
+<h3>Swimming</h3>
+<p>Olympic-standard 50m temperature-regulated indoor aquatic pool.</p>
+<span class="sport-card-btn">View Program &rarr;</span>
+</div>
+</div>
+
+<div class="sport-card" onclick="openSportDetail('skating')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShXlelrzPlgNWsLtYHPW7XA1bKKQ_Wlm0__IKtyCfs5w&s=10" alt="Skating" class="sport-img">
+<div class="sport-info">
+<h3>Skating</h3>
+<p>Smooth polyurethane banked speed-track engineered for inline speed.</p>
+<span class="sport-card-btn">View Program &rarr;</span>
+</div>
+</div>
+
+<div class="sport-card" onclick="openSportDetail('chess')">
+<img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=600" alt="Chess" class="sport-img">
+<div class="sport-info">
+<h3>Chess</h3>
+<p>Grandmaster strategy labs with digital clock tournament desks.</p>
+<span class="sport-card-btn">View Program &rarr;</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<button type="button" class="arrow-btn arrow-right" onclick="slideCards('right')" aria-label="Next Sport">
+<i class="fa-solid fa-chevron-right"></i>
+</button>
+</div>
+</section>
+</div>
+
+<div id="features-page">
+<div class="features-hero-header">
+<div class="back-tag" onclick="showPage('home')" style="color: var(--secondary-color); background: #e8eaf6; margin-bottom: 20px; display: inline-flex;">
+<i class="fa-solid fa-arrow-left"></i> Back to Home
+</div>
+<h1>Academy Core Features & Facilities</h1>
+<p>Explore what makes our Sports Academy the premier choice for aspiring champions and elite professional athletes.</p>
+</div>
+
+<div class="features-detailed-grid">
+
+<div class="feature-card-detailed">
+<div class="f-icon-box"><i class="fa-solid fa-award"></i></div>
+<h3>Expert Coaching Pedigree</h3>
+<p>Train directly under certified national and international mentors, former team captains, and Dronacharya awardees with decades of competitive mastery.</p>
+<ul>
+<li><i class="fa-solid fa-check"></i> 1-on-1 Mentorship Plans</li>
+<li><i class="fa-solid fa-check"></i> Technique Video Breakdown</li>
+<li><i class="fa-solid fa-check"></i> Tactical Game Strategy</li>
+</ul>
+</div>
+
+<div class="feature-card-detailed">
+<div class="f-icon-box"><i class="fa-solid fa-heart-pulse"></i></div>
+<h3>Sports Nutrition & Rehab</h3>
+<p>Keep your body at peak performance with customized diet planning, licensed physiotherapists, and advanced injury prevention and muscle recovery zones.</p>
+<ul>
+<li><i class="fa-solid fa-check"></i> Customized Athlete Diets</li>
+<li><i class="fa-solid fa-check"></i> On-site Sports Physiotherapist</li>
+<li><i class="fa-solid fa-check"></i> Hydrotherapy & Stretch Labs</li>
+</ul>
+</div>
+
+<div class="feature-card-detailed">
+<div class="f-icon-box"><i class="fa-solid fa-trophy"></i></div>
+<h3>Tournament Exposure</h3>
+<p>Regular opportunities to compete in district, state, and national level championships, giving players real competitive match experience under pressure.</p>
+<ul>
+<li><i class="fa-solid fa-check"></i> District & State Leagues</li>
+<li><i class="fa-solid fa-check"></i> Inter-Academy Cups</li>
+<li><i class="fa-solid fa-check"></i> Scout & Selector Trials</li>
+</ul>
+</div>
+
+<div class="feature-card-detailed">
+<div class="f-icon-box"><i class="fa-solid fa-microchip"></i></div>
+<h3>High-Tech Training Rigs</h3>
+<p>Equipped with cutting-edge robotic bowling machines, DGT smart sensor boards, biometric jump radars, and automated timing gates for precise progression.</p>
+<ul>
+<li><i class="fa-solid fa-check"></i> Automated Speed Radars</li>
+<li><i class="fa-solid fa-check"></i> Digital Score & Shot Clocks</li>
+<li><i class="fa-solid fa-check"></i> Biomechanical Tracking</li>
+</ul>
+</div>
+
+<div class="feature-card-detailed">
+<div class="f-icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+<h3>Safety & Impact Reduction</h3>
+<p>Uncompromised safety standards featuring shock-absorbing turf, maple-wood spring floors, perimeter padding, and emergency paramedic first responders.</p>
+<ul>
+<li><i class="fa-solid fa-check"></i> Shock-Absorbent Surfaces</li>
+<li><i class="fa-solid fa-check"></i> 24/7 Paramedic Response</li>
+<li><i class="fa-solid fa-check"></i> Sanitized Equipment Hubs</li>
+</ul>
+</div>
+
+<div class="feature-card-detailed">
+<div class="f-icon-box"><i class="fa-solid fa-calendar-days"></i></div>
+<h3>Flexible Batch Timings</h3>
+<p>Choose from early morning sunrise batches, evening floodlight training, or weekend-only intensive sessions designed to match academic and work schedules.</p>
+<ul>
+<li><i class="fa-solid fa-check"></i> Sunrise & Sunset Slots</li>
+<li><i class="fa-solid fa-check"></i> Weekend Intensive Passes</li>
+<li><i class="fa-solid fa-check"></i> Custom Private Bookings</li>
+</ul>
+</div>
+
+</div>
+</div>
+
+<div id="slots-page">
+
+<div id="slots-menu-view">
+<div class="slot-page-header">
+
+<div class="back-tag" onclick="showPage('home')" style="color: var(--secondary-color); background: #e8eaf6; margin-bottom: 20px; display: inline-flex;">
+<i class="fa-solid fa-arrow-left"></i> Back to Home
+</div>
+
+<h1>Select a Sport for Slot Booking</h1>
+<p>Choose your favorite sport to view and reserve dedicated ground sessions.</p>
+</div>
+
+<div class="slot-sports-menu-grid">
+
+<div class="slot-sport-card" onclick="viewSportSlots('Cricket')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlTKL3AHLFa1rh2UdQMvSlZMZhDvaz99MNqvZ1KuxVnw&s=10" alt="Cricket" class="sport-img">
+<div class="slot-sport-card-info">
+<h3>Cricket</h3>
+<p>5 Daily Practice & Match Sessions</p>
+<span class="slot-view-btn">View Slots &rarr;</span>
+</div>
+</div>
+
+<div class="slot-sport-card" onclick="viewSportSlots('Football')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8YD13nCfjlOYZGR9V2AicIfyeZro9Sz9DCOa4cdTHRA&s=10=" alt="Football" class="sport-img">
+<div class="slot-sport-card-info">
+<h3>Football</h3>
+<p>5 Daily Pitch & Skill Sessions</p>
+<span class="slot-view-btn">View Slots &rarr;</span>
+</div>
+</div>
+
+<div class="slot-sport-card" onclick="viewSportSlots('Chess')">
+<img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=600" alt="Chess">
+<div class="slot-sport-card-info">
+<h3>Chess</h3>
+<p>5 Daily Grandmaster Analysis Slots</p>
+<span class="slot-view-btn">View Slots &rarr;</span>
+</div>
+</div>
+
+<div class="slot-sport-card" onclick="viewSportSlots('Basketball')">
+<img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=600" alt="Basketball">
+<div class="slot-sport-card-info">
+<h3>Basketball</h3>
+<p>5 Daily Indoor Hardcourt Sessions</p>
+<span class="slot-view-btn">View Slots &rarr;</span>
+</div>
+</div>
+
+<div class="slot-sport-card" onclick="viewSportSlots('Volleyball')">
+<img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?q=80&w=600" alt="Volleyball">
+<div class="slot-sport-card-info">
+<h3>Volleyball</h3>
+<p>5 Daily Court & Beach Sand Slots</p>
+<span class="slot-view-btn">View Slots &rarr;</span>
+</div>
+</div>
+
+<div class="slot-sport-card" onclick="viewSportSlots('Swimming')">
+<img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?q=80&w=600" alt="Swimming">
+<div class="slot-sport-card-info">
+<h3>Swimming</h3>
+<p>5 Daily Temperature-Regulated Batches</p>
+<span class="slot-view-btn">View Slots &rarr;</span>
+</div>
+</div>
+
+<div class="slot-sport-card" onclick="viewSportSlots('Skating')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShXlelrzPlgNWsLtYHPW7XA1bKKQ_Wlm0__IKtyCfs5w&s=10" alt="Skating" class="sport-img">
+<div class="slot-sport-card-info">
+<h3>Skating</h3>
+<p>5 Daily Polyurethane Rink Batches</p>
+<span class="slot-view-btn">View Slots &rarr;</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="sport-slots-display">
+
+<div class="back-tag" onclick="backToSlotsMenu()" style="color: var(--secondary-color); background: #e8eaf6; margin-bottom: 20px; display: inline-flex;">
+<i class="fa-solid fa-arrow-left"></i> Back to Sports Menu
+</div>
+
+<div class="sport-slots-topbar">
+<div class="venue-info">
+<h2 id="currentSportSlotTitle">Cricket Academy Slots</h2>
+<p><i class="fa-solid fa-location-dot"></i> <strong id="currentSportAddress">Sports Cricket Oval & Nets, Pallavaram 200 Feet Radial Rd, Chennai - 600043</strong></p>
+</div>
+
+<div style="font-size: 0.9rem; color: #666; font-weight: 600;">
+<i class="fa-solid fa-calendar-days" style="color: var(--primary-color);"></i> 5 Practice Sessions Available
+</div>
+</div>
+
+<div class="slots-grid" id="slotsContainer"></div>
+
+</div>
+</div>
+
+<div id="sport-detail-page">
+
+<div class="sport-banner-hero" id="sportHeroBanner">
+<div class="sport-banner-content">
+
+<div class="back-tag" onclick="showPage('home')">
+<i class="fa-solid fa-arrow-left"></i> Back to Home
+</div>
+
+<h1 id="sportDetailTitle">Football Academy</h1>
+<p id="sportDetailTagline">World-Class Facilities for Every Sport, Every Athlete</p>
+
+</div>
+</div>
+
+<div class="detail-sub-section">
+<h2 class="detail-heading">World-Class Facilities for Every Sport, Every Athlete</h2>
+<p class="detail-lead" id="sportFacilitiesDesc">Our cutting-edge academy sets the standard with Olympic-grade courts, equipment, and tailored training grounds designed to empower athletes at every step.</p>
+<div class="highlight-grid" id="facilitiesGrid"></div>
+</div>
+
+<div class="detail-sub-section">
+<h2 class="detail-heading">Your Safety, Our Priority</h2>
+<p class="detail-lead">We hold player safety to the highest standards with round-the-clock physical therapists, shock-absorbent flooring, medical first responders, and sanitized environments.</p>
+
+<div class="highlight-grid">
+
+<div class="highlight-box">
+<i class="fa-solid fa-kit-medical"></i>
+<h4>Emergency First Responders</h4>
+<p>Paramedic certified staff and on-court first aid response kits active through all training hours.</p>
+</div>
+
+<div class="highlight-box">
+<i class="fa-solid fa-shield-halved"></i>
+<h4>Impact Reduction Tech</h4>
+<p>Engineered shock-absorbing turf and spring-wood flooring designed to protect player joints.</p>
+</div>
+
+<div class="highlight-box">
+<i class="fa-solid fa-user-doctor"></i>
+<h4>On-site Sports Physio</h4>
+<p>Post-training recovery sessions, muscle stretching zones, and injury rehabilitation support.</p>
+</div>
+
+</div>
+</div>
+
+<div class="detail-sub-section">
+<h2 class="detail-heading">Level Up Your Game</h2>
+<p class="detail-lead">From foundational mechanics to elite tournament preparation, our 3-tier program delivers measurable progression.</p>
+
+<div class="level-cards-grid">
+
+<div class="level-card">
+<span class="level-badge">Tier 01</span>
+<h3>Beginner</h3>
+<p>Foundations, body agility, core discipline, and basic rules of play.</p>
+<ul>
+<li><i class="fa-solid fa-check"></i> Fundamentals & Rules</li>
+<li><i class="fa-solid fa-check"></i> Agility & Footwork Drills</li>
+<li><i class="fa-solid fa-check"></i> Basic Gear Familiarity</li>
+</ul>
+</div>
+
+<div class="level-card intermediate">
+<span class="level-badge">Tier 02</span>
+<h3>Intermediate</h3>
+<p>Tactical awareness, game pacing, positional mastery, and endurance drills.</p>
+<ul>
+<li><i class="fa-solid fa-check"></i> Competitive Match Play</li>
+<li><i class="fa-solid fa-check"></i> Positional Strategy</li>
+<li><i class="fa-solid fa-check"></i> Cardio Conditioning</li>
+</ul>
+</div>
+
+<div class="level-card advanced">
+<span class="level-badge">Tier 03</span>
+<h3>Advanced</h3>
+<p>High-intensity competition readiness, video analysis, and tournament play.</p>
+<ul>
+<li><i class="fa-solid fa-check"></i> State/National Circuit Entry</li>
+<li><i class="fa-solid fa-check"></i> 1-on-1 Video Match Analysis</li>
+<li><i class="fa-solid fa-check"></i> Elite Mental Conditioning</li>
+</ul>
+</div>
+
+</div>
+</div>
+
+<div class="detail-sub-section">
+<h2 class="detail-heading">Course & Curriculum</h2>
+<p class="detail-lead">Structured weekly modules crafted by former national champions to guarantee athletic consistency.</p>
+
+<div class="curriculum-box">
+<div class="curriculum-timeline">
+
+<div class="curriculum-step">
+<div class="step-number">01</div>
+<h4>Warm-up & Agility</h4>
+<p>Dynamic flexibility, injury prevention routines, and cardiovascular activation.</p>
+</div>
+
+<div class="curriculum-step">
+<div class="step-number">02</div>
+<h4>Core Skill Drills</h4>
+<p>Repetition-based skill sets, precision drills, and neuromuscular coordination.</p>
+</div>
+
+<div class="curriculum-step">
+<div class="step-number">03</div>
+<h4>Tactical Strategy</h4>
+<p>Game scenario walkthroughs, defense systems, and smart clock management.</p>
+</div>
+
+<div class="curriculum-step">
+<div class="step-number">04</div>
+<h4>Match Simulation</h4>
+<p>Competitive full-length practice matches with referee evaluations and feedback.</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="detail-sub-section">
+<h2 class="detail-heading">Academy Membership Plans</h2>
+<p class="detail-lead">Select your frequency. Touch any plan below to proceed directly to registration with the amount pre-filled.</p>
+
+<div class="plans-grid">
+
+<div class="plan-card">
+<h3>Weekly Pass</h3>
+<p>Best for trials & short vacations</p>
+<div class="plan-amount">₹1,499 <span>/ Week</span></div>
+<ul class="plan-details">
+<li><span>Time Slot:</span> <strong>6:00 AM - 8:00 AM</strong></li>
+<li><span>Duration:</span> <strong>6 Days / Week</strong></li>
+<li><span>Period:</span> <strong>1 Week</strong></li>
+<li><span>Trainer:</span> <strong>Assigned Coach</strong></li>
+</ul>
+<button class="btn-get-started" onclick="selectMembershipPlan('₹1,499')">Get Started</button>
+</div>
+
+<div class="plan-card featured">
+<div class="popular-tag">Most Popular</div>
+<h3>Monthly Master</h3>
+<p>Standard consistent progress program</p>
+<div class="plan-amount">₹4,999 <span>/ Month</span></div>
+<ul class="plan-details">
+<li><span>Time Slot:</span> <strong>5:00 PM - 7:00 PM</strong></li>
+<li><span>Duration:</span> <strong>5 Days / Week</strong></li>
+<li><span>Period:</span> <strong>1 Month</strong></li>
+<li><span>Trainer:</span> <strong>Senior Head Coach</strong></li>
+</ul>
+<button class="btn-get-started" onclick="selectMembershipPlan('₹4,999')">Get Started</button>
+</div>
+
+<div class="plan-card">
+<h3>Quarterly Pro</h3>
+<p>Complete athlete transformation</p>
+<div class="plan-amount">₹12,499 <span>/ 3 Months</span></div>
+<ul class="plan-details">
+<li><span>Time Slot:</span> <strong>Flexible Timings</strong></li>
+<li><span>Duration:</span> <strong>6 Days / Week</strong></li>
+<li><span>Period:</span> <strong>3 Months</strong></li>
+<li><span>Trainer:</span> <strong>Master Mentor + Physio</strong></li>
+</ul>
+<button class="btn-get-started" onclick="selectMembershipPlan('₹12,499')">Get Started</button>
+</div>
+
+</div>
+</div>
+
+<div class="detail-sub-section">
+<h2 class="detail-heading" style="text-align: center;">Meet Our Coaches</h2>
+<p class="detail-lead" style="text-align: center; margin: 0 auto 35px;">Learn from legendary Tamil Nadu male sports icons and accredited coaches.</p>
+<div class="coaches-grid" id="coachesContainer"></div>
+</div>
+
+</div>
+
+<div id="register-page">
+
+<div class="register-wrapper">
+
+<div class="register-info-side">
+<a onclick="showPage('home')" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+
+<div class="side-content-box">
+<h2>Reach out via message. <br><span>Register Now!</span></h2>
+
+<div class="info-box-model">
+<i class="fa-solid fa-location-dot"></i>
+<div class="info-box-text">
+<h4>Central Campus</h4>
+<p>Sports Complex, High Road Campus, Chennai, TN, India - 600001</p>
+</div>
+</div>
+
+<div class="info-box-model">
+<i class="fa-solid fa-phone"></i>
+<div class="info-box-text">
+<h4>Contact Info</h4>
+<p><a href="tel:+919876543210"><strong>+91 98765 43210</strong></a></p>
+</div>
+</div>
+
+<div class="info-box-model">
+<i class="fa-solid fa-envelope"></i>
+<div class="info-box-text">
+<h4>Email Support</h4>
+<p><a href="mailto:support@sports.academy"><strong>support@sports.academy</strong></a></p>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="form-container">
+<h2 class="form-title">Academy Registration</h2>
+<p class="form-subtitle">Fill out the fields below to get started.</p>
+
+<form id="academyRegisterForm" onsubmit="handleRegistrationSubmit(event)">
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="fname">First Name <span>*</span></label>
+<input type="text" id="fname" name="fname" placeholder="Enter first name" required>
+</div>
+
+<div class="input-group">
+<label for="lname">Last Name <span>*</span></label>
+<input type="text" id="lname" name="lname" placeholder="Enter last name" required>
+</div>
+
+</div>
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="phone">Phone <span>*</span></label>
+<input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+</div>
+
+<div class="input-group">
+<label for="email">Email <span>*</span></label>
+<input type="email" id="email" name="email" placeholder="Enter email address" required>
+</div>
+
+</div>
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="age">Age <span>*</span></label>
+<input type="number" id="age" name="age" min="1" max="100" placeholder="Enter age" required>
+</div>
+
+<div class="input-group">
+<label for="gender">Gender <span>*</span></label>
+<select id="gender" name="gender" required>
+<option value="">-- Select Gender --</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Other">Other</option>
+</select>
+</div>
+
+</div>
+
+<div class="input-group">
+<label for="qualification">Qualification <span>*</span></label>
+<select id="qualification" name="qualification" required>
+<option value="">-- Select Qualification --</option>
+<option value="upper_primary">Upper Primary (Class 6-8)</option>
+<option value="secondary">Secondary (Class 8-10)</option>
+<option value="higher_secondary">Higher Secondary (Class 11,12)</option>
+<option value="under_graduate">Under Graduate</option>
+<option value="graduate">Graduate</option>
+<option value="post_graduate">Post Graduate</option>
+</select>
+</div>
+
+<div class="input-group">
+<label for="regAmount">Amount (₹) <span>*</span></label>
+<input type="text" id="regAmount" name="regAmount" placeholder="e.g. ₹4,999" required>
+</div>
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="height">Height (in cm)</label>
+<input type="number" id="height" name="height" step="0.1" placeholder="e.g. 175">
+</div>
+
+<div class="input-group">
+<label for="weight">Weight (in kgs)</label>
+<input type="number" id="weight" name="weight" step="0.1" placeholder="e.g. 65">
+</div>
+
+</div>
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="location">Location <span>*</span></label>
+<input type="text" id="location" name="location" placeholder="Your City / Town" required>
+</div>
+
+<div class="input-group">
+<label for="sport">Preferred Sport <span>*</span></label>
+<select id="sport" name="sport" required>
+<option value="">-- Choose a Sport --</option>
+<option value="football">Football</option>
+<option value="basketball">Basketball</option>
+<option value="cricket">Cricket</option>
+<option value="volleyball">Volleyball</option>
+<option value="swimming">Swimming</option>
+<option value="skating">Skating</option>
+<option value="chess">Chess</option>
+</select>
+</div>
+
+</div>
+
+<div class="input-group">
+<label for="experience">Previous Sports Experience</label>
+<textarea id="experience" name="experience" rows="3" placeholder="Briefly describe your past sports activities..."></textarea>
+</div>
+
+<div class="input-group">
+<label for="special_req">Special Requirements</label>
+<textarea id="special_req" name="special_req" rows="3" placeholder="Any medical conditions or specific needs..."></textarea>
+</div>
+
+<button type="submit" class="btn-submit">Submit Registration</button>
+
+</form>
+</div>
+</div>
+</div>
+
+<div id="slot-booking-page">
+
+<div class="register-wrapper">
+
+<div class="register-info-side">
+
+<a onclick="showPage('slots')" class="btn-back">
+<i class="fa-solid fa-arrow-left"></i> Back to Slots
+</a>
+
+<div class="side-content-box">
+
+<h2>Lock In Your Slot.<br><span>Instant Booking!</span></h2>
+
+<div class="info-box-model">
+<i class="fa-solid fa-calendar-check"></i>
+<div class="info-box-text">
+<h4>Selected Sport</h4>
+<p id="slotSidebarSport">Cricket</p>
+</div>
+</div>
+
+<div class="info-box-model">
+<i class="fa-solid fa-location-dot"></i>
+<div class="info-box-text">
+<h4>Ground / Venue</h4>
+<p id="slotSidebarAddress">Sports Cricket Oval Campus</p>
+</div>
+</div>
+
+<div class="info-box-model">
+<i class="fa-solid fa-clock"></i>
+<div class="info-box-text">
+<h4>Timing & Batch</h4>
+<p id="slotSidebarTime">06:00 AM - 08:00 AM</p>
+</div>
+</div>
+
+<div class="info-box-model">
+<i class="fa-solid fa-tag"></i>
+<div class="info-box-text">
+<h4>Total Fee</h4>
+<p id="slotSidebarFee">₹500 / Session</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="form-container">
+
+<h2 class="form-title">Slot Registration Form</h2>
+<p class="form-subtitle">Fill in the information below to reserve your training session.</p>
+
+<form id="slotBookingForm" onsubmit="handleSlotRegisterSubmit(event)">
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="slotName">Name <span>*</span></label>
+<input type="text" id="slotName" name="slotName" required placeholder="Full name">
+</div>
+
+<div class="input-group">
+<label for="slotGender">Gender <span>*</span></label>
+<select id="slotGender" name="slotGender" required>
+<option value="">-- Select Gender --</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Other">Other</option>
+</select>
+</div>
+
+</div>
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="slotSportSelect">Sport <span>*</span></label>
+<input type="text" id="slotSportSelect" name="slotSportSelect" readonly required>
+</div>
+
+<div class="input-group">
+<label for="slotAmount">Amount <span>*</span></label>
+<input type="text" id="slotAmount" name="slotAmount" readonly required>
+</div>
+
+</div>
+
+<div class="input-group">
+<label for="slotGroundVenue">Academy Ground / Venue Address <span>*</span></label>
+<input type="text" id="slotGroundVenue" name="slotGroundVenue" readonly required style="background: #f0f0f5; font-weight: 500;">
+</div>
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="slotDate">Date <span>*</span></label>
+<input type="date" id="slotDate" name="slotDate" required>
+</div>
+
+<div class="input-group">
+<label for="slotTime">Time <span>*</span></label>
+<input type="text" id="slotTime" name="slotTime" required readonly>
+</div>
+
+</div>
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="slotMonth">Month <span>*</span></label>
+<input type="text" id="slotMonth" name="slotMonth" readonly required>
+</div>
+
+<div class="input-group">
+<label for="slotYear">Year <span>*</span></label>
+<input type="number" id="slotYear" name="slotYear" value="2026" min="2026" max="2028" required>
+</div>
+
+</div>
+
+<div class="input-row">
+
+<div class="input-group">
+<label for="slotPhone">Phone Number <span>*</span></label>
+<input type="tel" id="slotPhone" name="slotPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+</div>
+
+<div class="input-group">
+<label for="slotEmail">Email ID <span>*</span></label>
+<input type="email" id="slotEmail" name="slotEmail" required placeholder="Enter email address">
+</div>
+
+</div>
+
+<div class="input-group">
+<label for="slotAddress">Your Residential Address <span>*</span></label>
+<textarea id="slotAddress" name="slotAddress" rows="2" placeholder="Your current residential address..." required></textarea>
+</div>
+
+<button type="submit" class="btn-submit">Confirm Slot Booking</button>
+
+</form>
+</div>
+</div>
+</div>
+
+<div class="ai-wrapper-widget">
+
+<div class="ai-chat-box" id="aiChatBox">
+
+<div class="ai-chat-header">
+<i class="fa-solid fa-wand-magic-sparkles brand-icon"></i>
+
+<div class="ai-header-info">
+<h4>Academy AI Assistant</h4>
+<p>Online | Ask me anything!</p>
+</div>
+
+<div class="ai-chat-close" onclick="toggleAIChat()">
+<i class="fa-solid fa-xmark"></i>
+</div>
+</div>
+
+<div class="ai-chat-body" id="aiChatBody">
+<div class="ai-msg bot">
+Hi, any doubt about academy? Ask!
+</div>
+</div>
+
+<div class="ai-chat-footer">
+<input type="text" id="aiUserInput" placeholder="Type your doubt here..." onkeypress="handleAIPressKey(event)">
+<button class="ai-send-btn" onclick="sendAIMessage()">
+<i class="fa-solid fa-paper-plane"></i>
+</button>
+</div>
+
+</div>
+
+<div class="ai-trigger-btn" onclick="toggleAIChat()" aria-label="Open AI Assistant">
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+</div>
+
+</div>
+
+<footer>
+<p>&copy; 2026 Sports Academy. All rights reserved.</p>
+</footer>
+<!-- =====================================================
+     index.html
+     </body> TAG-KU MUNNADI PASTE PANNU
+     ===================================================== -->
+
+<div id="registrationReceiptOverlay"
+     class="registration-receipt-overlay">
+
+    <div class="registration-a4-paper"
+         id="registrationA4Paper">
+
+        <div class="registration-a4-header">
+            <h1>SPORTS ACADEMY</h1>
+            <h2>REGISTRATION DETAILS</h2>
+        </div>
+
+        <div class="registration-success-text">
+            REGISTRATION SUCCESSFUL
+        </div>
+
+        <div id="registrationReceiptContent"></div>
+
+        <div class="registration-a4-footer">
+            <p>Thank you for registering with Sports Academy.</p>
+            <p>Please keep this document for your records.</p>
+        </div>
+
+        <div class="registration-receipt-buttons">
+
+            <button onclick="printRegistrationReceipt()">
+                Print
+            </button>
+
+            <button onclick="closeRegistrationReceipt()">
+                Close
+            </button>
+
+        </div>
+
+    </div>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

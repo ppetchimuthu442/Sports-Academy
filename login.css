@@ -1,0 +1,484 @@
+/* SPORTS ACADEMY LOGIN PAGE */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #07152f;
+    --blue: #145dff;
+    --light-blue: #eaf0ff;
+    --text: #17233b;
+    --muted: #7d879b;
+    --border: #dce2ed;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%, #dce8ff 0, transparent 35%),
+        linear-gradient(135deg, #eef2f9, #f8faff);
+    color: var(--text);
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 1080px;
+    min-height: 650px;
+    display: grid;
+    grid-template-columns: 1fr 0.92fr;
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 25px 80px rgba(12, 31, 69, 0.16);
+}
+
+/* LEFT IMAGE PANEL */
+
+.sports-panel {
+    position: relative;
+    min-height: 650px;
+    overflow: hidden;
+    color: white;
+    background-color: #08162f;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrbh2WMoEzpsKFCmnoHm5AGnDr9VUO-XDjpoMbJBVQ8g&s=10");
+    background-position: center;
+    background-size: cover;
+}
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(4, 14, 35, 0.48),
+            rgba(4, 14, 35, 0.84)
+        );
+}
+
+.sports-content {
+    position: relative;
+    z-index: 1;
+    min-height: 650px;
+    display: flex;
+    flex-direction: column;
+    padding: 36px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.brand-icon {
+    font-size: 30px;
+}
+
+.sports-message {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 55px 0;
+}
+
+.eyebrow {
+    margin-bottom: 18px;
+    color: #a9c5ff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+}
+
+.sports-message h1 {
+    font-size: clamp(35px, 4vw, 49px);
+    line-height: 1.14;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+}
+
+.sports-description {
+    max-width: 360px;
+    color: #e0e8f8;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.sports-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 26px;
+}
+
+.sports-tags span {
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+}
+
+.panel-footer {
+    color: #c6d5f2;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.mobile-brand {
+    display: none;
+}
+
+/* RIGHT FORM PANEL */
+
+.form-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 55px 35px;
+}
+
+.form-heading {
+    margin-bottom: 34px;
+}
+
+.welcome-text {
+    margin-bottom: 12px;
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.form-heading h2 {
+    margin-bottom: 12px;
+    color: var(--navy);
+    font-size: 29px;
+    line-height: 1.3;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.input-group {
+    margin-bottom: 23px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: #27344b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.input-group input {
+    width: 100%;
+    height: 51px;
+    padding: 0 15px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    outline: none;
+    background: #fbfcff;
+    color: var(--text);
+    font-size: 13px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-group input::placeholder {
+    color: #a3acbc;
+}
+
+.input-group input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(20, 93, 255, 0.1);
+    background: #ffffff;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 65px;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    padding: 5px 0;
+    border: none;
+    background: transparent;
+    color: var(--blue);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.login-button {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(110deg, #145dff, #397cff);
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 800;
+    box-shadow: 0 9px 20px rgba(20, 93, 255, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(20, 93, 255, 0.28);
+}
+
+.login-button:disabled {
+    cursor: wait;
+    opacity: 0.75;
+    transform: none;
+}
+
+.button-arrow {
+    font-size: 20px;
+}
+
+.signup-text {
+    margin-top: 27px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.signup-text a {
+    margin-left: 4px;
+    color: var(--blue);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+}
+
+.form-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 48px;
+    color: #8b95a7;
+    font-size: 11px;
+}
+
+.error-message {
+    margin-bottom: 22px;
+    padding: 12px 14px;
+    border: 1px solid #ffcaca;
+    border-radius: 8px;
+    background: #fff1f1;
+    color: #bd2525;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* LOADING SCREEN */
+
+.loading-screen {
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #07152f;
+    color: white;
+    text-align: center;
+}
+
+.loading-content {
+    width: 100%;
+    max-width: 360px;
+}
+
+.loading-logo {
+    margin-bottom: 22px;
+    font-size: 55px;
+    animation: bounce 1s infinite alternate;
+}
+
+.loading-content h2 {
+    margin-bottom: 12px;
+    font-size: 25px;
+}
+
+.loading-content p {
+    color: #c2cfe8;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.loading-track {
+    height: 5px;
+    overflow: hidden;
+    margin-top: 30px;
+    border-radius: 10px;
+    background: #273653;
+}
+
+.loading-progress {
+    width: 40%;
+    height: 100%;
+    border-radius: 10px;
+    background: #4381ff;
+    animation: loading 1.6s ease-in-out forwards;
+}
+
+@keyframes loading {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-8px);
+    }
+}
+
+/* TABLET */
+
+@media (max-width: 850px) {
+    .login-card {
+        max-width: 650px;
+        grid-template-columns: 1fr;
+    }
+
+    .sports-panel {
+        min-height: 300px;
+    }
+
+    .sports-content {
+        min-height: 300px;
+        padding: 28px;
+    }
+
+    .sports-message {
+        padding: 35px 0;
+    }
+
+    .sports-message h1 {
+        font-size: 36px;
+    }
+
+    .sports-description {
+        max-width: 500px;
+    }
+
+    .panel-footer {
+        display: none;
+    }
+
+    .form-panel {
+        padding: 42px 38px;
+    }
+
+    .form-bottom {
+        margin-top: 30px;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 0;
+        background: #ffffff;
+    }
+
+    .login-card {
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .sports-panel {
+        display: none;
+    }
+
+    .form-panel {
+        padding: 35px 24px;
+    }
+
+    .mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 45px;
+        color: var(--navy);
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .mobile-brand span {
+        font-size: 28px;
+    }
+
+    .form-heading h2 {
+        font-size: 26px;
+    }
+
+    .form-bottom {
+        margin-top: 38px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

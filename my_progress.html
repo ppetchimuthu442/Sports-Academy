@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile | Sports Academy</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+ --bg:#0a1020;--panel:#121c30;--panel2:#18263e;
+ --text:#f4f7ff;--muted:#a7b4ca;--blue:#4b91ff;
+ --border:#293955;--green:#42d99a;--red:#ff8585
+}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.layout{min-height:100vh;display:grid;grid-template-columns:255px 1fr}
+.sidebar{background:#0d1729;border-right:1px solid var(--border);padding:26px 16px}
+.brand{font-size:22px;font-weight:800;padding:10px 12px 26px}
+.brand span{color:var(--blue)}
+.side-label{font-size:11px;letter-spacing:2px;color:var(--muted);padding:12px}
+.nav{display:flex;flex-direction:column;gap:8px}
+.nav button{width:100%;text-align:left;padding:14px 13px;border:0;border-radius:10px;
+ background:transparent;color:var(--muted);font-size:14px;cursor:pointer}
+.nav button:hover,.nav button.active{background:#203653;color:white}
+.logout{margin-top:22px!important;color:#ffaaaa!important}
+.main{padding:30px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+h1{margin:0 0 8px;font-size:30px}
+h2{margin-top:0}
+p{line-height:1.6}
+.muted{color:var(--muted)}
+.pill{background:#153a36;color:#7cf0c0;border-radius:30px;padding:8px 12px;font-size:12px}
+.section{display:none;margin-top:28px}
+.section.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card,.panel{background:linear-gradient(145deg,var(--panel),var(--panel2));
+ border:1px solid var(--border);border-radius:16px;padding:22px;min-width:0}
+.card-label{color:var(--muted);font-size:14px}
+.big{font-size:32px;font-weight:800;margin:12px 0}
+.btn{border:0;border-radius:9px;background:var(--blue);color:white;
+ padding:11px 15px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.secondary{background:#283a57}
+input{display:block;width:100%;padding:13px;margin:8px 0 16px;
+ border:1px solid var(--border);border-radius:9px;background:#0c1527;color:white}
+label{color:var(--muted);font-size:13px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th,td{padding:13px;text-align:left;border-bottom:1px solid var(--border);font-size:14px}
+th{color:#aebbd0;background:#101b2e}
+.notice{color:var(--muted);font-size:13px}
+.progress-track{height:12px;background:#2b3a53;border-radius:20px;overflow:hidden;margin:16px 0}
+.progress-bar{height:100%;width:0;background:var(--green);transition:width .3s}
+.message{margin:18px 0;color:#9ec5ff}
+.mobile-title{display:none}
+@media(max-width:850px){
+ .layout{grid-template-columns:1fr}
+ .sidebar{padding:12px;border-right:0;border-bottom:1px solid var(--border)}
+ .brand{padding:8px}
+ .nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .nav button{padding:11px;font-size:13px}
+ .logout{margin-top:0!important}
+ .main{padding:20px}
+ .grid{grid-template-columns:1fr}
+ .form-grid{grid-template-columns:1fr}
+ h1{font-size:25px}
+}
+</style>
+</head>
+
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand">SPORTS <span>ACADEMY</span></div>
+  <p class="side-label">STUDENT PORTAL</p>
+  <nav class="nav">
+    <button class="active" data-section="details">👤 My Details</button>
+    <button data-section="registration">📋 My Registration</button>
+    <button data-section="bookings">📅 My Bookings</button>
+    <button data-section="progress">📈 My Progress</button>
+    <button data-section="settings">⚙ Settings</button>
+    <button class="logout" onclick="location.href='{{ url_for('student_logout') }}'">↪ Logout</button>
+  </nav>
+</aside>
+
+<main class="main">
+  <div class="top">
+    <div>
+      <h1 id="pageTitle">My Details</h1>
+      <p class="muted">Manage your Sports Academy account in one place.</p>
+    </div>
+    <span class="pill">STUDENT ACCOUNT</span>
+  </div>
+  <div id="message" class="message" role="status">Loading your account...</div>
+
+  <section id="details" class="section active">
+    <div class="panel">
+      <h2>My Details</h2>
+      <p class="muted">Your profile information</p>
+      <form id="profileForm">
+        <div class="form-grid">
+          <div><label for="profileName">Student name</label>
+          <input id="profileName" required maxlength="150"></div>
+          <div><label for="profileEmail">Email (account ID)</label>
+          <input id="profileEmail" readonly></div>
+          <div><label for="profilePhone">Phone number</label>
+          <input id="profilePhone" maxlength="30" placeholder="Enter phone number"></div>
+        </div>
+        <button class="btn" type="submit">Save Details</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="registration" class="section">
+    <div class="panel">
+      <h2>My Registration</h2>
+      <p class="muted">Only registrations matching your logged-in email are shown.</p>
+      <div class="table-wrap">
+        <table><thead><tr><th>Sport</th><th>Plan</th><th>Amount</th><th>Date</th><th>PDF</th></tr></thead>
+        <tbody id="registrationRows"><tr><td colspan="5">Loading...</td></tr></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <section id="bookings" class="section">
+    <div class="panel">
+      <h2>My Bookings</h2>
+      <p class="muted">Upcoming and past slot bookings for your account.</p>
+      <div class="table-wrap">
+        <table><thead><tr><th>Sport</th><th>Venue</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+        <tbody id="bookingRows"><tr><td colspan="5">Loading...</td></tr></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <section id="progress" class="section">
+    <div class="grid">
+      <div class="card"><div class="card-label">Total Bookings</div><div class="big" id="totalBookings">0</div></div>
+      <div class="card"><div class="card-label">Upcoming Bookings</div><div class="big" id="upcomingBookings">0</div></div>
+      <div class="card"><div class="card-label">Attended Sessions</div><div class="big" id="attendedSessions">0</div></div>
+    </div>
+    <div class="panel" style="margin-top:18px">
+      <h2>Attendance Progress</h2>
+      <div class="big" id="attendancePercent">0%</div>
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+      <p class="notice">Attendance is based on sessions marked as attended in the attendance records. A past booking alone is not counted as attendance.</p>
+    </div>
+  </section>
+
+  <section id="settings" class="section">
+    <div class="panel">
+      <h2>Settings</h2>
+      <p class="muted">Change your account password.</p>
+      <form id="passwordForm">
+        <label for="currentPassword">Current password</label>
+        <input id="currentPassword" type="password" required autocomplete="current-password">
+        <label for="newPassword">New password (minimum 8 characters)</label>
+        <input id="newPassword" type="password" minlength="8" required autocomplete="new-password">
+        <label for="confirmPassword">Confirm new password</label>
+        <input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password">
+        <button class="btn" type="submit">Change Password</button>
+      </form>
+    </div>
+  </section>
+</main>
+</div>
+
+<script>
+const messageBox = document.getElementById("message");
+let profileData = null;
+
+document.querySelectorAll("[data-section]").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll("[data-section]").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+    button.classList.add("active");
+    document.getElementById(button.dataset.section).classList.add("active");
+    document.getElementById("pageTitle").textContent = button.textContent.replace(/^[^A-Za-z]+/, "").trim();
+  });
+});
+
+function cell(row, value) {
+  const td = row.insertCell();
+  td.textContent = value == null || value === "" ? "-" : value;
+  return td;
+}
+
+async function loadProfile() {
+  try {
+    const response = await fetch("{{ url_for('my_profile_data') }}");
+    const data = await response.json();
+    if (!response.ok || !data.success) throw new Error(data.message || "Could not load profile.");
+
+    profileData = data;
+    document.getElementById("profileName").value = data.student.name || "";
+    document.getElementById("profileEmail").value = data.student.email || "";
+    document.getElementById("profilePhone").value = data.student.phone || "";
+
+    const regs = document.getElementById("registrationRows");
+    regs.replaceChildren();
+    if (!data.registrations.length) {
+      const row = regs.insertRow(), td = row.insertCell();
+      td.colSpan = 5; td.textContent = "No registrations found for this account.";
+    } else {
+      data.registrations.forEach(reg => {
+        const row = regs.insertRow();
+        cell(row, reg.sport); cell(row, reg.plan); cell(row, "₹" + (reg.amount ?? "-"));
+        cell(row, reg.created_at ? String(reg.created_at).slice(0, 10) : "-");
+        const td = row.insertCell();
+        const link = document.createElement("a");
+        link.className = "btn"; link.textContent = "Download PDF";
+        link.href = "/my-registration-pdf/" + encodeURIComponent(reg.id);
+        td.appendChild(link);
+      });
+    }
+
+    const rows = document.getElementById("bookingRows");
+    rows.replaceChildren();
+    if (!data.bookings.length) {
+      const row = rows.insertRow(), td = row.insertCell();
+      td.colSpan = 5; td.textContent = "No bookings found for this account.";
+    } else {
+      const today = new Date().toISOString().slice(0, 10);
+      data.bookings.forEach(booking => {
+        const row = rows.insertRow();
+        cell(row, booking.sport); cell(row, booking.venue);
+        cell(row, booking.booking_date); cell(row, booking.booking_time);
+        cell(row, booking.booking_date >= today ? "Upcoming" : "Past");
+      });
+    }
+
+    document.getElementById("totalBookings").textContent = data.stats.total_bookings;
+    document.getElementById("upcomingBookings").textContent = data.stats.upcoming_bookings;
+    document.getElementById("attendedSessions").textContent = data.stats.attended_sessions;
+    document.getElementById("attendancePercent").textContent = data.stats.attendance_percentage + "%";
+    document.getElementById("progressBar").style.width = data.stats.attendance_percentage + "%";
+    messageBox.textContent = "Profile loaded successfully.";
+  } catch (error) {
+    messageBox.textContent = error.message;
+  }
+}
+
+document.getElementById("profileForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const response = await fetch("{{ url_for('update_my_profile') }}", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      name: document.getElementById("profileName").value.trim(),
+      phone: document.getElementById("profilePhone").value.trim()
+    })
+  });
+  const data = await response.json();
+  messageBox.textContent = data.message || "Profile update finished.";
+  if (response.ok && data.success) loadProfile();
+});
+
+document.getElementById("passwordForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const response = await fetch("{{ url_for('change_my_password') }}", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      current_password: document.getElementById("currentPassword").value,
+      new_password: document.getElementById("newPassword").value,
+      confirm_password: document.getElementById("confirmPassword").value
+    })
+  });
+  const data = await response.json();
+  messageBox.textContent = data.message || "Password update finished.";
+  if (response.ok && data.success) event.target.reset();
+});
+
+loadProfile();
+</script>
+</body>
+</html>
