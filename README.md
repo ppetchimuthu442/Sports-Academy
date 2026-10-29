@@ -33,5 +33,5 @@ The Sports Academy Management System is a web-based application developed to man
 This project helped me gain practical knowledge of web development, backend programming, database connectivity, and application development.
 
 ## Author
-
+M.PETCHIMUTHU
 B.Sc. Computer Science Student
